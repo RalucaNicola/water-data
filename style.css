@@ -1,0 +1,66 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: rgb(230, 230, 230);
+  font-family: "Avenir Next", "Avenir", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+#viewDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#storyDiv {
+  position: relative;
+  background-color: rgba(50 50 50 / 0.9);
+  max-width: 40%;
+}
+
+#storyDiv > section {
+  min-height: 100vh;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.description > p {
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+}
+
+.description > h1 {
+  font-size: 1.2rem;
+}
+
+.esri-legend {
+  width: unset !important;
+}
+
+#timeline {
+  width: 90%;
+  margin-bottom: 1rem;
+}
+
+#timeline .esri-widget,
+#timeline .esri-time-slider__slider,
+.esri-time-slider__slider .esri-slider,
+#timeline button {
+  background-color: transparent !important;
+}
+
+.esri-time-slider {
+  box-shadow: none;
+}
+
+.esri-time-slider__row:first-of-type {
+  display: none;
+}
+
+.esri-time-slider__max,
+.esri-time-slider__min {
+  visibility: hidden;
+}

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Scrolling globe prototype</title>
+  <script src="https://js.arcgis.com/4.26/"></script>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/dark/main.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="viewDiv"></div>
+  <div id="storyDiv">
+    <section>
+      <div class="description">
+        <h1 class="title" data-title='india'>Irrigation gap in India</h1>
+        <p>Over the last decades India’s economy and population have
+          grown rapidly. This has increased the pressure on their freshwater resources. Due to
+          the lack of water management in India this has resulted in water scarcity.</p>
+      </div>
+    </section>
+    <section>
+      <div class="description">
+        <h1 class="title" data-title='india-waterbasins'>Irrigation water demand in India</h1>
+        <p>To improve human well-being the agricultural practices
+          have intensified in India. This has led to a high consumption of water by the
+          agricultural sector. Also, there are few regulations of water resources by the
+          government to reduce agricultural water use or improve efficiency of the system.
+        </p>
+      </div>
+      <div id="timeline-basins">
+    </section>
+
+    <section>
+      <div class="description">
+        <h1 class="title" data-title='mexico-waterbasins'>Domestic water demand in Mexico</h1>
+        <p>In Mexico the water scarcity problems are most severe in
+          the large cities. Water service systems are managed inefficiently, often mainly
+          affecting the poorest as they live in informal settings without access to the water
+          network.
+        </p>
+      </div>
+    </section>
+    <section>
+      <div class="description">
+        <h1 class="title" data-title='japan-waterbasins'>Industrial water demand in Japan</h1>
+        <p>After the second world war Japan had a rapid economic
+          growth. The industrial water use is relatively high as the Japanese economy relies
+          heavily on their large industrial sector. On the other hand improvements in water use
+          efficiency and water management have resulted in a recent decrease in (industrial)
+          water use.
+        </p>
+      </div>
+    </section>
+  </div>
+</body>
+<script src="script.js"></script>
+
+</html>
