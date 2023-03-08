@@ -201,13 +201,13 @@ require([
     const {colorStops, opacityStops, valueExpression} = basinsRendererSettings[country];
     return new SimpleRenderer({
       symbol: new PolygonSymbol3D({
-        symbolLayers: new FillSymbol3DLayer({
+        symbolLayers: [new FillSymbol3DLayer({
           material: {color: "white"},
           outline: {
             size: 0.1,
             color: "rgba(127,127,127,0.2)", // this.#colorRampByVariable[this.#variable][0]
           },
-        }),
+        })],
       }),
       visualVariables: [
         new ColorVariable({
