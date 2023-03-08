@@ -19,10 +19,7 @@ let slides = null;
 
 // these are needed for the layer switching when we change the time
 let basinsLayer = null;
-let basinsCopyLayer = null;
 let basinsLayerView = null;
-let basinsCopyLayerView = null;
-let currentBasinsLayer = "original";
 
 const getValueExpression = (field, yearOffset) => {
   return `Number(Split($feature.${field},'|')[${yearOffset}])`;
@@ -150,7 +147,7 @@ require([
     const year = value.end.getFullYear();
     if (year !== currentYear) {
       currentYear = year;
-      showYear(currentYear);
+      updateBasinsRendererForYear(currentYear);
     }
   });
 
@@ -242,57 +239,19 @@ require([
     // we'll make a copy so we can alternate between this and the original
     // and have a smooth transition when the user changes the year
     basinsLayer = waterBasinsIndia;
-    basinsCopyLayer = basinsLayer.clone();
-    basinsCopyLayer.opacity = 0;
-    basinsCopyLayer.legendEnabled = false;
-    view.map.add(basinsCopyLayer);
     view.whenLayerView(basinsLayer).then(lyrView => {
       basinsLayerView = lyrView;
     });
-    view.whenLayerView(basinsCopyLayer).then(lyrView => {
-      basinsCopyLayerView = lyrView;
-    });
   });
 
-  const updateBasinsRendererForYear = (layer, year) => {
-    const renderer = layer.renderer.clone();
+  const updateBasinsRendererForYear = (year) => {
+    const renderer = basinsLayer.renderer.clone();
     const expression = getValueExpression("irrigation_demand", year - 1980);
     // color visual variable
     renderer.visualVariables[0].valueExpression = expression;
     // opacity visual variable
     renderer.visualVariables[1].valueExpression = expression;
-    layer.renderer = renderer;
-  };
-
-  const showYear = year => {
-    const before = performance.now();
-    if (currentBasinsLayer === "original") {
-      updateBasinsRendererForYear(basinsCopyLayer, year);
-      reactiveUtils
-        .whenOnce(() => !basinsCopyLayerView?.updating)
-        .then(() => {
-          basinsCopyLayer.opacity = 1;
-          basinsCopyLayer.legendEnabled = true;
-          basinsLayer.opacity = 0;
-          basinsLayer.legendEnabled = false;
-          currentBasinsLayer = "copy";
-          const after = performance.now();
-          console.log("Applied renderer in (seconds): ", (after - before) / 1000);
-        });
-    } else {
-      updateBasinsRendererForYear(basinsLayer, year);
-      reactiveUtils
-        .whenOnce(() => !basinsLayerView?.updating)
-        .then(() => {
-          basinsCopyLayer.opacity = 0;
-          basinsCopyLayer.legendEnabled = false;
-          basinsLayer.opacity = 1;
-          basinsLayer.legendEnabled = true;
-          currentBasinsLayer = "original";
-          const after = performance.now();
-          console.log("Applied renderer in (seconds): ", (after - before) / 1000);
-        });
-    }
+    basinsLayer.renderer = renderer;
   };
 
   window.addEventListener("resize", () => {
@@ -317,13 +276,6 @@ require([
           abortController = new AbortController();
           slide
             .applyTo(view, {signal: abortController.signal})
-            .then(() => {
-              // changing to the india-waterbasins slide will make the copied basins layer invisible
-              // and we want it to stay visible so that we have the smooth transitions
-              if (slide.title.text === "india-waterbasins") {
-                basinsCopyLayer.visible = true;
-              }
-            })
             .catch(error => {
               !promiseUtils.isAbortError(error) && console.error(error);
             });
