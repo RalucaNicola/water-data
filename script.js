@@ -249,12 +249,9 @@ require([
       basinsLayerView = lyrView;
     });
 
-    const basemap = new Basemap({
-      portalItem: {
-        id: "0820f3eb06454c4f907b282ebcf91be2"
-      }
-    });
-    view.map.basemap = basemap;
+    // view.map.updateFrom(view).then(function() {
+    //   view.map.save().then(() => {console.log("scene saved successfully")}).catch(error => console.error);
+    // }).catch(error => console.error);
 
     const searchParams = new URLSearchParams(window.location.search.slice(1));
     if (searchParams && searchParams.has("test") && searchParams.get("test")) {
