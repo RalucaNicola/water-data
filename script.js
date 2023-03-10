@@ -79,6 +79,9 @@ require([
   "esri/renderers/visualVariables/SizeVariable",
   "esri/renderers/visualVariables/ColorVariable",
   "esri/renderers/visualVariables/OpacityVariable",
+  "esri/widgets/LayerList",
+  "esri/widgets/BasemapLayerList",
+  "esri/Basemap"
 ], function (
   WebScene,
   SceneView,
@@ -93,13 +96,16 @@ require([
   FillSymbol3DLayer,
   SizeVariable,
   ColorVariable,
-  OpacityVariable
+  OpacityVariable,
+  LayerList,
+  BasemapLayerList,
+  Basemap
 ) {
   // load webscene that contains the layers for irrigation gap and demands for each hotspot:
   // https://geoxc.maps.arcgis.com/home/webscene/viewer.html?webscene=4e87f384617e4c09bdb104ad687ddc51
   const map = new WebScene({
     portalItem: {
-      id: "96a1d2db23814dba839ee1515b2280a4",
+      id: "e6a28e348b984733a5e8d785769d20af",
     },
   });
 
@@ -242,6 +248,18 @@ require([
     view.whenLayerView(basinsLayer).then(lyrView => {
       basinsLayerView = lyrView;
     });
+
+    // view.map.updateFrom(view).then(function() {
+    //   view.map.save().then(() => {console.log("scene saved successfully")}).catch(error => console.error);
+    // }).catch(error => console.error);
+
+    const searchParams = new URLSearchParams(window.location.search.slice(1));
+    if (searchParams && searchParams.has("test") && searchParams.get("test")) {
+      const layerList = new LayerList({view});
+      const basemapList = new BasemapLayerList({view});
+      view.ui.add([layerList, basemapList], "top-right");
+    }
+
   });
 
   const updateBasinsRendererForYear = (year) => {
